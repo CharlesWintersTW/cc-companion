@@ -12,7 +12,8 @@ Manage the companion statusline. Read `~/.claude/settings.json` first to determi
 Show the current pet:
 ```bash
 PLUGIN_DIR=$(ls -d "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"/plugins/cache/cc-companion/cc-companion/*/ 2>/dev/null | awk -F/ '{ print $(NF-1) "\t" $0 }' | sort -t. -k1,1n -k2,2n -k3,3n | tail -1 | cut -f2-)
-"$HOME/.bun/bin/bun" "${PLUGIN_DIR}scripts/companion.mjs"
+BUN_PATH=$(command -v bun 2>/dev/null || echo "$HOME/.bun/bin/bun")
+"$BUN_PATH" "${PLUGIN_DIR}scripts/companion.mjs"
 ```
 
 Then read the current displayMode and speechBubble:
@@ -75,7 +76,8 @@ Remove the `statusLine` field from settings.json entirely. Tell user to restart 
 Show the user's pet:
 ```bash
 PLUGIN_DIR=$(ls -d "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"/plugins/cache/cc-companion/cc-companion/*/ 2>/dev/null | awk -F/ '{ print $(NF-1) "\t" $0 }' | sort -t. -k1,1n -k2,2n -k3,3n | tail -1 | cut -f2-)
-"$HOME/.bun/bin/bun" "${PLUGIN_DIR}scripts/companion.mjs"
+BUN_PATH=$(command -v bun 2>/dev/null || echo "$HOME/.bun/bin/bun")
+"$BUN_PATH" "${PLUGIN_DIR}scripts/companion.mjs"
 ```
 
 Warn that this will **replace** any current statusline (e.g. claude-hud). Ask to proceed.

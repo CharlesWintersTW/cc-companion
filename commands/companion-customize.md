@@ -10,13 +10,15 @@ Help the user customize their companion pet. This is a conversational flow — a
 ### Step 1: Show current pet and ask what to do
 ```bash
 PLUGIN_DIR=$(ls -d "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"/plugins/cache/cc-companion/cc-companion/*/ 2>/dev/null | awk -F/ '{ print $(NF-1) "\t" $0 }' | sort -t. -k1,1n -k2,2n -k3,3n | tail -1 | cut -f2-)
-"$HOME/.bun/bin/bun" "${PLUGIN_DIR}scripts/companion.mjs"
+BUN_PATH=$(command -v bun 2>/dev/null || echo "$HOME/.bun/bin/bun")
+"$BUN_PATH" "${PLUGIN_DIR}scripts/companion.mjs"
 ```
 
 Then ask: "Customize a new pet, or restore to your original?" If restore, run:
 ```bash
 PLUGIN_DIR=$(ls -d "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"/plugins/cache/cc-companion/cc-companion/*/ 2>/dev/null | awk -F/ '{ print $(NF-1) "\t" $0 }' | sort -t. -k1,1n -k2,2n -k3,3n | tail -1 | cut -f2-)
-"$HOME/.bun/bin/bun" "${PLUGIN_DIR}scripts/customize-auto.mjs" restore
+BUN_PATH=$(command -v bun 2>/dev/null || echo "$HOME/.bun/bin/bun")
+"$BUN_PATH" "${PLUGIN_DIR}scripts/customize-auto.mjs" restore
 ```
 Then stop.
 
@@ -51,7 +53,8 @@ Then stop.
 After collecting all choices, build the command. Add `--shiny` flag if user wants shiny:
 ```bash
 PLUGIN_DIR=$(ls -d "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"/plugins/cache/cc-companion/cc-companion/*/ 2>/dev/null | awk -F/ '{ print $(NF-1) "\t" $0 }' | sort -t. -k1,1n -k2,2n -k3,3n | tail -1 | cut -f2-)
-"$HOME/.bun/bin/bun" "${PLUGIN_DIR}scripts/customize-auto.mjs" <species> <rarity> <eye> [hat] [--shiny]
+BUN_PATH=$(command -v bun 2>/dev/null || echo "$HOME/.bun/bin/bun")
+"$BUN_PATH" "${PLUGIN_DIR}scripts/customize-auto.mjs" <species> <rarity> <eye> [hat] [--shiny]
 ```
 
 The output includes the salt and the sprite. Show the result to the user, then ask: "Save this pet?"
