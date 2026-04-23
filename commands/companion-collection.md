@@ -28,7 +28,7 @@ Read `~/.claude/plugins/cc-companion/config.json`, then ask:
 ### If save:
 1. Show current pet:
 ```bash
-PLUGIN_DIR=$(ls -d "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"/plugins/cache/cc-companion/cc-companion/*/ 2>/dev/null | awk -F/ '{ print $(NF-1) "\t" $0 }' | sort -t. -k1,1n -k2,2n -k3,3n | tail -1 | cut -f2-)
+PLUGIN_DIR=$(for d in "${CLAUDE_CONFIG_DIR:-$HOME/.claude}"/plugins/cache/cc-companion/cc-companion/*/; do [ -d "$d" ] && echo "$d"; done | sort -V | tail -n1)
 BUN_PATH=$(command -v bun 2>/dev/null || echo "$HOME/.bun/bin/bun")
 "$BUN_PATH" "${PLUGIN_DIR}scripts/companion.mjs"
 ```
